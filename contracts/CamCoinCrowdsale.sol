@@ -6,7 +6,9 @@ import '../zeppelin-solidity/contracts/crowdsale/RefundableCrowdsale.sol';
 import '../zeppelin-solidity/contracts/token/TokenTimelock.sol';
 
 
-contract CamCoinCrowdsale is CappedSupplyCrowdsale, RefundableCrowdsale {
+contract CamOnRoadCrowdsale is CappedSupplyCrowdsale, RefundableCrowdsale {
+
+    using SafeMath for uint256;
 
     uint256 private tokensTotal;
     uint256 private tokensForTeam;
@@ -19,7 +21,7 @@ contract CamCoinCrowdsale is CappedSupplyCrowdsale, RefundableCrowdsale {
     address public timeVault;
 
 
-    function CamCoinCrowdsale(uint256 _startBlock, uint256 _preIcoEndBlock, uint256 _endBlock, uint256 _rate, uint256 _mininvest, address _ownerWallet, address _beneficiaryWallet, uint256 _goal, uint256 _preIcoCap, uint256 _tokensTotal, uint256 _tokensForSale, uint256 _tokensForTeam)
+    function CamOnRoadCrowdsale(uint256 _startBlock, uint256 _preIcoEndBlock, uint256 _endBlock, uint256 _rate, uint256 _mininvest, address _ownerWallet, address _beneficiaryWallet, uint256 _goal, uint256 _preIcoCap, uint256 _tokensTotal, uint256 _tokensForSale, uint256 _tokensForTeam)
     CappedSupplyCrowdsale(_tokensForSale)
     RefundableCrowdsale(_goal)
     Crowdsale(_startBlock, _endBlock, _rate, _beneficiaryWallet) {
@@ -37,7 +39,7 @@ contract CamCoinCrowdsale is CappedSupplyCrowdsale, RefundableCrowdsale {
         preIcoCap = _preIcoCap;
         preIcoEndBlock = _preIcoEndBlock;
 
-        timeVault = new TokenTimelock(token, owner, now + 12 hours);
+        timeVault = new TokenTimelock(token, owner, now + 120 hours);
 
     }
 
@@ -54,7 +56,7 @@ contract CamCoinCrowdsale is CappedSupplyCrowdsale, RefundableCrowdsale {
     }
 
     function finalization() internal onlyOwner {
-        current = tokensTotal - (token.totalSupply() + tokensForTeam);
+        current = tokensTotal.sub(token.totalSupply().add(tokensForTeam));
 
         token.mint(timeVault, tokensForTeam);
         token.mint(owner, current);
