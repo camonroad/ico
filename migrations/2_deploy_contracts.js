@@ -1,9 +1,9 @@
 var CamOnRoadCrowdsale = artifacts.require("./CamOnRoadCrowdsale.sol")
 
 module.exports = function(deployer, network, accounts) {
-  const startBlock = 4203697 // blockchain block number where the crowdsale will start
-  const preIcoEndBlock = 4229499  // blockchain block number where pre ICO will end.
-  const endBlock = 4355876  // blockchain block number where crowdsale will end.
+  const startBlock = 4199859 // blockchain block number where the crowdsale will start
+  const preIcoEndBlock = 4229119  // blockchain block number where pre ICO will end.
+  const endBlock = 4354518  // blockchain block number where crowdsale will end.
   const rate = new web3.BigNumber(800) // rate of token in ETH. send X eth - get X*rate tokens
   const mininvest = new web3.BigNumber(50) // minimal pay avaliable in finney. Finney is 1/1000 ether
   const ownerWallet = "0x51cB668d545C6B68f59CEC6b988E51916355e0CA" // the address that will hold tokens and will manage contract
