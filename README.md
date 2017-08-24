@@ -2,7 +2,7 @@
 
 ## Описание
 
-Этот контракт обеспечит ICO (первичное размещение монет) для [CamOnRoad](https://ico.camonroad.com). Мы планируем начать ICO 1 сентября.
+Этот контракт обеспечит ICO (первичное размещение монет) для [CamOnRoad](https://ico.camonroad.com). Мы планируем начать ICO 1 сентября. Whitepaper можно найти [здесь](https://ico.camonroad.com/camonroad_whitepaper.pdf).
 
 ## Логика
 
