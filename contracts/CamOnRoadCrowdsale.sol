@@ -14,32 +14,32 @@ contract CamOnRoadCrowdsale is CappedSupplyCrowdsale, RefundableCrowdsale {
     uint256 private tokensForTeam;
     uint256 public mininvest;
     uint256 private current;
-    uint256 public preIcoEndBlock;
+    uint256 public preIcoEndTime;
     uint256 private preIcoCap;
     address public wallet;
     address private owner;
     address public timeVault;
 
 
-    function CamOnRoadCrowdsale(uint256 _startBlock, uint256 _preIcoEndBlock, uint256 _endBlock, uint256 _rate, uint256 _mininvest, address _ownerWallet, address _beneficiaryWallet, uint256 _goal, uint256 _preIcoCap, uint256 _tokensTotal, uint256 _tokensForSale, uint256 _tokensForTeam)
+    function CamOnRoadCrowdsale(uint256 _startTime, uint256 _preIcoEndTime, uint256 _endTime, uint256 _rate, uint256 _mininvest, address _ownerWallet, address _beneficiaryWallet, uint256 _goal, uint256 _preIcoCap, uint256 _tokensTotal, uint256 _tokensForSale, uint256 _tokensForTeam)
     CappedSupplyCrowdsale(_tokensForSale)
     RefundableCrowdsale(_goal)
-    Crowdsale(_startBlock, _endBlock, _rate, _beneficiaryWallet) {
+    Crowdsale(_startTime, _endTime, _rate, _beneficiaryWallet) {
         owner = _ownerWallet;
         wallet = _beneficiaryWallet;
         require(_goal > 0);
         require(_preIcoCap > 0);
         require(_mininvest > 0);
         require (_tokensForTeam + _tokensForSale < _tokensTotal);
-        require(_startBlock < _preIcoEndBlock);
-        require(_preIcoEndBlock < _endBlock);
+        require(_startTime < _preIcoEndTime);
+        require(_preIcoEndTime < _endTime);
         tokensTotal = _tokensTotal;
         tokensForTeam = _tokensForTeam;
         mininvest = _mininvest;
         preIcoCap = _preIcoCap;
-        preIcoEndBlock = _preIcoEndBlock;
+        preIcoEndTime = _preIcoEndTime;
 
-        timeVault = new TokenTimelock(token, owner, now + 547 days);
+        timeVault = new TokenTimelock(token, owner, now + 4 hours);
 
     }
 
@@ -49,7 +49,7 @@ contract CamOnRoadCrowdsale is CappedSupplyCrowdsale, RefundableCrowdsale {
 
     function validPurchase() internal constant returns (bool) {
         require (msg.value > mininvest);
-        if (block.number <= preIcoEndBlock) {
+        if (now <= preIcoEndTime) {
             require(weiRaised.add(msg.value) <= preIcoCap);
         }
         return super.validPurchase();
