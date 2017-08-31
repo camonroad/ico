@@ -39,7 +39,7 @@ contract CamOnRoadCrowdsale is CappedSupplyCrowdsale, RefundableCrowdsale {
         preIcoCap = _preIcoCap;
         preIcoEndTime = _preIcoEndTime;
 
-        timeVault = new TokenTimelock(token, owner, now + 4 hours);
+        timeVault = new TokenTimelock(token, owner, now + 547 days);
 
     }
 
